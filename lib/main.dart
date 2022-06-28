@@ -10,6 +10,7 @@ import './providers/exercise.dart';
 import './screens/tabs_screen.dart';
 import './providers/plans.dart';
 import './screens/todo_screen.dart';
+import './providers/goal.dart';
 
 void main()  async {
   WidgetsFlutterBinding.ensureInitialized();

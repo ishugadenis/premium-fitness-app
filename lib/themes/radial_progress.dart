@@ -40,9 +40,9 @@ class _RadialProgressState extends State<RadialProgress> with SingleTickerProvid
   Widget build(BuildContext context) {
     return CustomPaint(
       child: Container(
-        height: 200,
-        width: 200,
-        padding: EdgeInsets.symmetric(vertical: 40.0),
+        height: MediaQuery.of(context).size.height* 0.3,
+        width: MediaQuery.of(context).size.width*0.4,
+        padding: EdgeInsets.symmetric(vertical: 40),
         child: AnimatedOpacity(
           opacity: progressDegrees > 30 ? 1.0 : 0.0,
           duration: fadeInDuration,
@@ -57,7 +57,7 @@ class _RadialProgressState extends State<RadialProgress> with SingleTickerProvid
               ),
               Container(
                 height: 5.0,
-                width: 80.0,
+                width: MediaQuery.of(context).size.width*0.2,
                 decoration: BoxDecoration(
                     color: Colors.purple,
                     borderRadius: BorderRadius.all(Radius.circular(4.0))),
