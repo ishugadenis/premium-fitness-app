@@ -11,12 +11,12 @@
             "request": "launch",
             "type": "dart"
         },
-        {
-            "name": "premium_fitness_app (profile mode)",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
+        // {
+        //     "name": "premium_fitness_app (profile mode)",
+        //     "request": "launch",
+        //     "type": "dart",
+        //     "flutterMode": "profile"
+        // },
         {
             "name": "premium_fitness_app (release mode)",
             "request": "launch",

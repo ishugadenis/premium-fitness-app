@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../blocs/database_service.dart';
 import '../widgets/categories_list.dart';
-import '../drawer/drawer.dart';
 
 class WorkoutCategories extends StatelessWidget {
   //const WorkoutCategories({Key? key}) : super(key: key);
@@ -49,7 +49,8 @@ class WorkoutCategories extends StatelessWidget {
           // ),
           Container(
               decoration: BoxDecoration(color: Colors.blueGrey[50]),
-              child: CategoriesList()),
+              child: CategoriesList(),
+          ),
     );
   }
 }

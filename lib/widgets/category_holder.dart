@@ -1,30 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:premium_fitness_app/models/bodyParts.dart';
 import 'package:premium_fitness_app/screens/workouts_screen.dart';
 import '../providers/workout_categories.dart';
 import 'package:provider/provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CategoryHolder extends StatelessWidget {
-  //const CategoryHolder({Key? key}) : super(key: key);
-//   final String id;
-//   final String title;
-//   final String imageUrl;
-//
-//   CategoryHolder(
-//       this.id,
-//       this.title,
-//       this.imageUrl,
-//
-// );
+  //CategoryHolder(String id, String imageUrl, String title, );
+
+  final String id;
+  final String title;
+  final String imageUrl;
+
+  CategoryHolder(
+      this.id,
+      this.title,
+      this.imageUrl,
+
+);
+  //final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
-    final category = Provider.of<Category>(context);
+    final category = Provider.of<BodyParts>(context);
 
     return InkWell(
       borderRadius: BorderRadius.circular(15),
       onTap: () {
         Navigator.of(context)
-            .pushNamed(WorkoutScreen.routeName, arguments: category.id);
+            .pushNamed(WorkoutScreen.routeName, arguments:{
+              'title': category.bodyPart,
+              'id':category.id,
+              'imageUrl':category.imageUrl,
+
+        });
       },
        child: Stack(
         alignment: AlignmentDirectional.bottomCenter,
@@ -36,10 +47,11 @@ class CategoryHolder extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: ClipRRect(
+              child:
+              ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: Image(
-                  image: NetworkImage(category.imageUrl),
+                  image:NetworkImage(category.imageUrl),
                   fit: BoxFit.cover,
                 ),
               )),
@@ -58,13 +70,13 @@ class CategoryHolder extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     Text(
-                      category.title,
-                      style: const TextStyle(
+                      category.bodyPart,
+                      style: TextStyle(
                         fontSize: 24,
-                        color: Colors.white,
+                       color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
-                    ),
+                      ),
                   ],
                 ),
               )),

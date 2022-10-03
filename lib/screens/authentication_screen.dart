@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../widgets/auth_form.dart';
@@ -14,6 +15,7 @@ class AuthenticationScreen extends StatefulWidget {
 class _AuthenticationScreenState extends State<AuthenticationScreen> {
  // const AuthenticationScren({Key? key}) : super(key: key);
   final _auth =FirebaseAuth.instance;
+
 
   var _isLoading = false;
 
@@ -38,6 +40,18 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
          else {
            authResult = await _auth.createUserWithEmailAndPassword(
                email: email, password: password);
+          await FirebaseFirestore.instance.collection('users').doc(authResult.user?.uid).
+        set({
+          'username': username,
+          'email': email,
+        });
+          await FirebaseFirestore.instance.collection('goals').doc(authResult.user?.uid).
+          set({
+            'targetWeight': '40',
+            'isTargetSet': true,
+            'userId':FirebaseAuth.instance.currentUser?.uid
+
+          });
          }
        } on PlatformException catch (err){
          var message ='Ann error occured, please check your credentials';

@@ -1,38 +1,41 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math_64.dart' as math;
 
 class RadialProgress extends StatefulWidget {
   //const RadialProgress({Key? key}) : super(key: key);
-   final double goalCompleted =0.7;
+ // double current;
+  //double target;
 
+ // RadialProgress(this.current, this.target);
+
+  final double goalCompleted = 0.5;
 
   @override
   _RadialProgressState createState() => _RadialProgressState();
 }
 
-class _RadialProgressState extends State<RadialProgress> with SingleTickerProviderStateMixin{
+class _RadialProgressState extends State<RadialProgress>
+    with SingleTickerProviderStateMixin {
   late AnimationController _radialProgressAnimationController;
   late Animation<double> _progressAnimation;
   final Duration fadeInDuration = Duration(milliseconds: 500);
   final Duration fillDuration = Duration(seconds: 2);
 
-
-  double progressDegrees =0.0;
-    var count=0;
+  double progressDegrees = 0.0;
+  var count = 0;
   @override
   void initState() {
     super.initState();
-    _radialProgressAnimationController =AnimationController(vsync: this, duration:Duration(seconds: 1));
-    _progressAnimation =Tween(begin: 0.0, end: 360.0)
-    .animate(CurvedAnimation(parent: _radialProgressAnimationController,
-        curve: Curves.decelerate))
+    _radialProgressAnimationController =
+        AnimationController(vsync: this, duration: Duration(seconds: 1));
+    _progressAnimation = Tween(begin: 0.0, end: 360.0).animate(CurvedAnimation(
+        parent: _radialProgressAnimationController, curve: Curves.decelerate))
       ..addListener(() {
         setState(() {
-          progressDegrees =(widget.goalCompleted * _progressAnimation.value);
+          progressDegrees = (widget.goalCompleted * _progressAnimation.value);
         });
-
-    });
+      });
     _radialProgressAnimationController.forward();
   }
 
@@ -40,8 +43,8 @@ class _RadialProgressState extends State<RadialProgress> with SingleTickerProvid
   Widget build(BuildContext context) {
     return CustomPaint(
       child: Container(
-        height: MediaQuery.of(context).size.height* 0.3,
-        width: MediaQuery.of(context).size.width*0.4,
+        height: MediaQuery.of(context).size.height * 0.3,
+        width: MediaQuery.of(context).size.width * 0.5,
         padding: EdgeInsets.symmetric(vertical: 40),
         child: AnimatedOpacity(
           opacity: progressDegrees > 30 ? 1.0 : 0.0,
@@ -57,7 +60,7 @@ class _RadialProgressState extends State<RadialProgress> with SingleTickerProvid
               ),
               Container(
                 height: 5.0,
-                width: MediaQuery.of(context).size.width*0.2,
+                width: MediaQuery.of(context).size.width * 0.2,
                 decoration: BoxDecoration(
                     color: Colors.purple,
                     borderRadius: BorderRadius.all(Radius.circular(4.0))),
@@ -83,39 +86,38 @@ class _RadialProgressState extends State<RadialProgress> with SingleTickerProvid
   }
 }
 
-
-class RadialPainter extends CustomPainter{
+class RadialPainter extends CustomPainter {
   double progressInDegrees;
   RadialPainter(this.progressInDegrees);
   @override
   void paint(Canvas canvas, Size size) {
-
     Paint paint = Paint()
-    ..color=Colors.black12
-    ..strokeCap =StrokeCap.round
-    ..style= PaintingStyle.stroke
-    ..strokeWidth =8.0;
-    Offset center =Offset(size.width/2, size.height/2);
-    canvas.drawCircle(center, size.width/2, paint);
+      ..color = Colors.black12
+      ..strokeCap = StrokeCap.round
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 8.0;
+    Offset center = Offset(size.width / 2, size.height / 2);
+    canvas.drawCircle(center, size.width / 2, paint);
 
     Paint progressPaint = Paint()
-    ..color = Colors.blue
-    ..shader =LinearGradient(
-      colors:[
-        Colors.red, Colors.purple, Colors.purpleAccent
-      ]).createShader(Rect.fromCircle(center: center, radius: size.width/2))
-    ..strokeCap =StrokeCap.round
-    ..style = PaintingStyle.stroke
-    ..strokeWidth=8.0;
+      ..color = Colors.blue
+      ..shader = LinearGradient(
+              colors: [Colors.red, Colors.purple, Colors.purpleAccent])
+          .createShader(Rect.fromCircle(center: center, radius: size.width / 2))
+      ..strokeCap = StrokeCap.round
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 8.0;
 
-    canvas.drawArc(Rect.fromCircle(center: center, radius: size.width/2), math.radians(-90),
-        math.radians(progressInDegrees), false, progressPaint);
+    canvas.drawArc(
+        Rect.fromCircle(center: center, radius: size.width / 2),
+        math.radians(-90),
+        math.radians(progressInDegrees),
+        false,
+        progressPaint);
   }
 
   @override
-  bool shouldRepaint( CustomPainter oldDelegate) {
+  bool shouldRepaint(CustomPainter oldDelegate) {
     return true;
   }
-
 }
-

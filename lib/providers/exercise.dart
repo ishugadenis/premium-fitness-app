@@ -108,6 +108,7 @@ class Exercises with ChangeNotifier{
         equipments:'Full Gym, Machine',
         reps:'12-10-8-6'
     ),
+    //endpoint
     Exercise(
         id:'e12',
         category:'c1',
@@ -180,6 +181,7 @@ class Exercises with ChangeNotifier{
         equipments:'Bench, Full Gym, NO EQUIPMENT',
         reps:'12-10-8-6'
     ),
+    //endpoint
     Exercise(
         id:'e21',
         category:'c3',
@@ -260,6 +262,7 @@ class Exercises with ChangeNotifier{
         equipments:'Barbell, Full Gym',
         reps:'12-10-8-6'
     ),
+    //endpoint
     Exercise(
         id:'e31',
         category:'c4',
@@ -332,6 +335,7 @@ class Exercises with ChangeNotifier{
         equipments:'Full Gym, NO EQUIPMENT',
         reps:'12-10-8-6'
     ),
+    //endpoint
     Exercise(
         id:'e40',
         category:'c5',
@@ -388,6 +392,7 @@ class Exercises with ChangeNotifier{
         equipments:'Cable,Full Gym',
         reps:'12-10-8-6'
     ),
+    //endpoint
     Exercise(
         id:'e47',
         category:'c6',
@@ -460,6 +465,7 @@ class Exercises with ChangeNotifier{
         equipments:'Barbell, Full Gym',
         reps:'12-10-8-6'
     ),
+    //endpoint
     Exercise(
         id:'e56',
         category:'c7',
@@ -516,6 +522,7 @@ class Exercises with ChangeNotifier{
         equipments:' Barbell, Full Gym',
         reps:'12-10-8-6'
     ),
+    //endpoint
     Exercise(
         id:'e63',
         category:'c8',
@@ -588,6 +595,7 @@ class Exercises with ChangeNotifier{
         equipments:'Full Gym, Machine',
         reps:'12-10-8-6'
     ),
+    //endpoint
     Exercise(
         id:'e72',
         category:'c9',
@@ -636,6 +644,7 @@ class Exercises with ChangeNotifier{
         equipments:' Full Gym, Machine',
         reps:'15min'
     ),
+ //endpoint
     Exercise(
         id:'e78',
         category:'c10',

@@ -92,7 +92,7 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
                     key: ValueKey('password'),
                     validator: (value){
                       if(value!.isEmpty || value.length< 7){
-                        return 'Password shoild be atleast 7 characters';
+                        return 'Password should be atleast 7 characters';
                       }
                       return null;
                     },

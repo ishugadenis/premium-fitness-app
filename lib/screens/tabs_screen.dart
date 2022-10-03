@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:premium_fitness_app/screens/MealScreen.dart';
+import 'package:premium_fitness_app/screens/wp_screeen.dart';
+import 'package:provider/provider.dart';
+import '../providers/goals.dart';
 import './progress_screen.dart';
-import 'profile_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import './workout_categories_screen.dart';
 import './workout_plan_screen.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TabsScreen extends StatefulWidget {
-  // const TabsScreen({Key? key}) : super(key: key);
+
 
   @override
   _TabsScreenState createState() => _TabsScreenState();
 }
 
 class _TabsScreenState extends State<TabsScreen> {
+
   final List<Map<String, dynamic>> _pages = [
-    {'page': WorkoutCategories(), 'title': 'Categories'},
-    {'page': const WorkoutPlan(), 'title': 'Plan'},
-    {'page': const ProgressScreen(), 'title': 'Progress'},
-    //{'page': const ProfileScreen(), 'title': 'Profile'}
+    {'page': WorkoutCategories(), 'title': 'Workout Training'},
+    {'page': WorkoutPlan(), 'title': 'Plan'},
+    {'page': UserProgress(), 'title': 'Progress'},
+    {'page': MealScreen(), 'title': 'MealPlan'}
   ];
 
   int _selectedPageIndex = 0;
@@ -33,34 +39,63 @@ class _TabsScreenState extends State<TabsScreen> {
       appBar: AppBar(
         title: Text(_pages[_selectedPageIndex]['title']),
         backgroundColor: Colors.black,
-      ),
-      drawer: const Drawer(
-        child: Text('The drawer'),
+        actions: [
+          DropdownButton(
+            icon: Icon(
+              Icons.more_vert,
+              color: Theme.of(context).primaryColor,
+            ),
+            items: [
+              DropdownMenuItem(
+                child: Container(
+                  child: Row(
+                    children: const <Widget>[
+                      Icon(Icons.exit_to_app),
+                      SizedBox(width: 8),
+                      Text('Logout'),
+                    ],
+                  ),
+                ),
+                value: 'logout',
+              ),
+            ],
+            onChanged: (itemIdentifier) {
+              if (itemIdentifier == 'logout') {
+                FirebaseAuth.instance.signOut();
+              }
+            },
+          ),
+        ],
       ),
       body: _pages[_selectedPageIndex]['page'],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black87,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.black,
+        selectedFontSize: 11,
+        unselectedFontSize: 11,
         unselectedItemColor: Colors.white,
-        selectedItemColor: Colors.grey,
+        selectedItemColor: Color.fromARGB(255, 206, 123, 123),
         onTap: _selectedpage,
+        
+        
         currentIndex: _selectedPageIndex,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Colors.white),
+            icon: Icon(Icons.home, color: Colors.white, size: 30),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today_outlined, color: Colors.white),
+              icon: FaIcon(FontAwesomeIcons.calendar,
+                  color: Colors.white, size: 30),
               label: 'Plan'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.track_changes, color: Colors.white),
+            icon: FaIcon(FontAwesomeIcons.chartLine, color: Colors.white, size: 30),
             label: 'Progress',
           ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.person, color: Colors.white),
-          //   label: 'Profile',
-          // ),
-
+          BottomNavigationBarItem(
+            icon: FaIcon(FontAwesomeIcons.hotdog, color: Colors.white, size: 30),
+            label: 'Meals',
+          ),
         ],
       ),
     );

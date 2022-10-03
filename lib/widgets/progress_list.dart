@@ -1,76 +1,43 @@
 import 'package:flutter/material.dart';
-import '../providers/goal.dart';
-import 'package:intl/intl.dart';
+import 'package:premium_fitness_app/widgets/progress_holder.dart';
+import 'package:provider/provider.dart';
+import 'update_form.dart';
+import '../providers/goals.dart';
 
-class ProgressList extends StatelessWidget {
- //const ProgressList({Key? key}) : super(key: key);
+class ProgressList extends StatefulWidget {
+  const ProgressList({Key? key}) : super(key: key);
 
-  final List<Goal>  _userGoals;
+  @override
+  State<ProgressList> createState() => _ProgressListState();
+}
 
-  ProgressList(this._userGoals);
+class _ProgressListState extends State<ProgressList> {
 
+  var _isInit =true;
+   @override
+  void didChangeDependencies() {
+     if(_isInit) {
+       Provider.of<Goals>(context).fetchAndSetGoals();
+     }
+     _isInit =false;
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
+
+   final holder = Provider.of<Goals>(context).g;
     return Container(
-      height: MediaQuery.of(context).size.height*0.25,
-      width: double.infinity,
-      child:ListView.builder(itemBuilder: (ctx, i)
-
-      {
-        return Card(
-          child: Container(
-            height: MediaQuery.of(context).size.height*0.1,
-            width: double.infinity,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          Text(DateFormat.yMMMMd().format(_userGoals[i].date).toString(),
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight:FontWeight.bold,
-                            color: Colors.blueAccent,
-                          )),
-                          Text(_userGoals[i].isComplete.toString(),
-                          style: TextStyle(
-                            fontSize:19,
-                            fontStyle:FontStyle.italic,
-                          ),),
-                        ],
-                      ),
-                      Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(_userGoals[i].goal,
-                            style: TextStyle(
-                              fontSize:19,
-                              fontStyle:FontStyle.normal,
-                            ),),
-                          Text(_userGoals[i].goalNo.toString()),
-                        ],
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-
-      },
-      itemCount:_userGoals.length ,
-      ),
+      height: 200,
+      child: ListView.builder(
+        reverse: true,
+        itemCount: holder.length,
+        itemBuilder:(ctx, i)=>
+        ChangeNotifierProvider.value(
+          value: holder[i] ,
+            child:ProgressHolder(goal: holder[i],)),
+        ),
     );
   }
 }
